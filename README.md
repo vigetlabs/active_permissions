@@ -1,8 +1,15 @@
 # ActivePermissions
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/active_permissions`. To experiment with that code, run `bin/console` for an interactive prompt.
+Drop in solution for a comprehensive Permission system using Rails and ActiveAdmin.
 
-TODO: Delete this and the text above, and describe your gem
+## Dependencies
+
+**ActiveAdmin**
+
+This gem requires:
+- you have the ActiveAdmin installed
+- you have an `active_admin.rb` file in `config/initializers`.
+- you have an AdminUser model with an `admin_users` database table
 
 ## Installation
 
@@ -12,17 +19,15 @@ Add this line to your application's Gemfile:
 gem 'active_permissions'
 ```
 
-And then execute:
+Install the gem, run the installer, then run the migrations:
 
     $ bundle
-
-Or install it yourself as:
-
-    $ gem install active_permissions
+    $ bundle exec rails generate active_permissions:install
+    $ bundle exec rake db:migrate
 
 ## Usage
 
-TODO: Write usage instructions here
+Start `rails server` and navigate to `/admin/permissions`. You'll see a nested list of all Admin Users, all ActiveAdmin-registered resources, and all actions.
 
 ## Development
 
@@ -38,4 +43,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
