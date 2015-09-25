@@ -13,7 +13,7 @@
 
         <% @models.each do |model| %>
           <div>
-            <b><%= model.to_s.gsub("::", " ") %></b>
+            <b><%= model.to_s.gsub("::", " ").pluralize %></b>
           </div>
 
           <% @permission_model.actions_for(model).each do |action| %>
