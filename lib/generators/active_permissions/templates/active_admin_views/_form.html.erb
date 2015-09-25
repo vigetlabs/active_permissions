@@ -1,0 +1,52 @@
+<% @permission_model = ActivePermissions::Models::Permission %>
+<% @models           = @permission_model.active_resources(active_admin_namespace) %>
+
+<div>
+  <form action=<%= admin_permissions_update_path %> method="post">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+    <% AdminUser.all.each do |user| %>
+      <div>
+        <div>
+          <b><%= user.email %></b>
+        </div>
+
+        <% @models.each do |model| %>
+          <div>
+            <b><%= model.to_s.gsub("::", " ") %></b>
+          </div>
+
+          <% @permission_model.actions_for(model).each do |action| %>
+            <% permission = @permission_model.for(user: user,
+              model: model, action: action) %>
+
+            <div>
+              <!-- Hidden input to submit unchecked boxes -->
+              <input
+                name  = 'permission[<%= permission.id %>]'
+                type  = 'hidden'
+                value = '<%= permission.disabled_for?(current_admin_user) ?
+                  permission.allowed? : false %>' />
+
+              <input
+                type       = 'checkbox'
+                id         = 'permission_<%= permission.id %>'
+                name       = 'permission[<%= permission.id %>]'
+                value      = 'true'
+                <%= 'disabled = true'   if permission.disabled_for?(current_admin_user) %>
+                <%= 'checked = checked' if permission.allowed? %> />
+
+              <label for='permission_<%= permission.id %>'>
+                <%= permission.action.capitalize %>
+              </label>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+
+      <br>
+    <% end %>
+
+    <%= submit_tag "Submit" %>
+  </form>
+</div>
