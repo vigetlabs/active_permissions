@@ -3,7 +3,7 @@ ActiveAdmin.register_page "Permissions" do
     render "form"
   end
 
-  page_action :update, method: :post do
+  page_action :update, method: :put do
     params[:permission].each do |id, value|
       begin
         permission = ActivePermissions::Models::Permission.find(id)
